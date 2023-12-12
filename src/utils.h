@@ -13,11 +13,23 @@ public:
         string client_order_id;
         string instrument;
         int side;
-        double price;
         int quantity;
+        double price;
+    };
+
+    struct execution {
+        string order_id;
+        string client_order_id;
+        string instrument;
+        int side;
+        int status;
+        int quantity;
+        double price;
+        string reason;
     };
 
     static vector<order> readOrderFile(string path);
+    static void writeExecutionReport(vector<execution> executions, string path);
 };
 
 

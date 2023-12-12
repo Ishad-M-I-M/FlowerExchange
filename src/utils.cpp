@@ -5,12 +5,14 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 vector<utils::order> utils::readOrderFile(string path) {
     ifstream file(path);
     if (!file.is_open()){
         cerr << "Cannot open file: " << path << endl;
+        exit(1);
     }
 
     vector<order> orders;
@@ -30,14 +32,35 @@ vector<utils::order> utils::readOrderFile(string path) {
         currentOrder.side = stoi(token);
 
         getline(ss, token, ',');
-        currentOrder.price = stod(token);
+        currentOrder.quantity = stoi(token);
 
-        ss >> currentOrder.quantity;
-
+        ss >> currentOrder.price;
         orders.push_back(currentOrder);
     }
 
     file.close();
 
     return orders;
+}
+
+void utils::writeExecutionReport(vector<execution> executions, string path) {
+    ofstream file(path);
+    if (!file.is_open()){
+        cerr << "Cannot open file: " << path << endl;
+        exit(1);
+    }
+
+    file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << endl;
+    for (execution exec: executions){
+        file << exec.order_id << ","
+            << exec.client_order_id << ","
+            << exec.instrument << ","
+            << exec.side << ","
+            << exec.status << ","
+            << exec.quantity << ","
+            << fixed << setprecision(2) << exec.price << ","
+            << exec.reason << endl;
+    }
+
+    file.close();
 }
