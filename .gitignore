@@ -1,2 +1,15 @@
 .idea
 cmake-build-debug
+CMakeFiles
+_deps
+bin
+lib
+Testing
+
+cmake_install.cmake
+CTestTestfile.cmake
+CMakeCache.txt
+Makefile
+FlowerExchangeApp
+libFlowerExchange.a
+test/FlowerExchangeTest
