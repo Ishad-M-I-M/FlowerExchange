@@ -23,3 +23,8 @@ TEST(UtilsTest, TestReadOrderFile){
         ASSERT_EQ(orders_1[i].quantity, actual[i].quantity);
     }
 }
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
