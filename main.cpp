@@ -1,6 +1,7 @@
 #include <iostream>
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+#include "src/utils.h"
+int main(int argc, char** argv) {
+    vector<utils::order> orders = utils::readOrderFile(argv[1]);
+    cout << "Hello" <<endl;
 }

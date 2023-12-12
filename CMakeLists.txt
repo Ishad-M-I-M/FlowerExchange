@@ -3,4 +3,31 @@ project(FlowerExchange)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(FlowerExchange main.cpp)
+# Include google test
+include(FetchContent)
+
+FetchContent_Declare(
+        googletest
+        # Specify the commit you depend on and update it regularly.
+        URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+)
+
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+enable_testing()
+
+set(SOURCES
+        src/utils.h
+        src/utils.cpp
+        src/order_book.h
+        src/order_book.cpp
+        src/exchange_application.h
+        src/exchange_application.cpp
+        )
+add_library(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME}App main.cpp)
+target_link_libraries(${PROJECT_NAME}App ${PROJECT_NAME})
+add_subdirectory(test)
