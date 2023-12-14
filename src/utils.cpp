@@ -56,11 +56,21 @@ void utils::writeExecutionReport(vector<execution> executions, string path) {
             << exec.client_order_id << ","
             << exec.instrument << ","
             << exec.side << ","
-            << exec.status << ","
+            << get_status(exec.status) << ","
             << exec.quantity << ","
             << fixed << setprecision(2) << exec.price << ","
             << exec.reason << endl;
     }
 
     file.close();
+}
+
+string utils::get_status(int status) {
+    switch (status) {
+        case 0: return "New";
+        case 1: return "Rejected";
+        case 2: return "Fill";
+        case 3: return "Pfill";
+        default: return "Error";
+    }
 }

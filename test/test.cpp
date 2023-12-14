@@ -98,7 +98,7 @@ TEST(OrderBookTest, TestSimpleSellBuy) {
     ASSERT_EQ(filled[0].side, 1);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 55.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -106,7 +106,7 @@ TEST(OrderBookTest, TestSimpleSellBuy) {
     ASSERT_EQ(filled[1].side, 2);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 55.0);
-    ASSERT_EQ(filled[1].status, 3);
+    ASSERT_EQ(filled[1].status, 2);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -135,7 +135,7 @@ TEST(OrderBookTest, TestSimpleSellBuyPFill) {
     ASSERT_EQ(filled[0].side, 1);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 55.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -143,7 +143,7 @@ TEST(OrderBookTest, TestSimpleSellBuyPFill) {
     ASSERT_EQ(filled[1].side, 2);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 55.0);
-    ASSERT_EQ(filled[1].status, 4);
+    ASSERT_EQ(filled[1].status, 3);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -172,7 +172,7 @@ TEST(OrderBookTest, TestSimpleBuySell) {
     ASSERT_EQ(filled[0].side, 2);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 55.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -180,7 +180,7 @@ TEST(OrderBookTest, TestSimpleBuySell) {
     ASSERT_EQ(filled[1].side, 1);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 55.0);
-    ASSERT_EQ(filled[1].status, 3);
+    ASSERT_EQ(filled[1].status, 2);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -209,7 +209,7 @@ TEST(OrderBookTest, TestSimpleBuySellPFill) {
     ASSERT_EQ(filled[0].side, 2);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 55.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -217,7 +217,7 @@ TEST(OrderBookTest, TestSimpleBuySellPFill) {
     ASSERT_EQ(filled[1].side, 1);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 55.0);
-    ASSERT_EQ(filled[1].status, 4);
+    ASSERT_EQ(filled[1].status, 3);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -246,7 +246,7 @@ TEST(OrderBookTest, TestLowSellHighBuy) {
     ASSERT_EQ(filled[0].side, 1);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 45.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -254,7 +254,7 @@ TEST(OrderBookTest, TestLowSellHighBuy) {
     ASSERT_EQ(filled[1].side, 2);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 45.0);
-    ASSERT_EQ(filled[1].status, 3);
+    ASSERT_EQ(filled[1].status, 2);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -283,7 +283,7 @@ TEST(OrderBookTest, TestHighBuyLowSell) {
     ASSERT_EQ(filled[0].side, 2);
     ASSERT_EQ(filled[0].quantity, 100);
     ASSERT_EQ(filled[0].price, 55.0);
-    ASSERT_EQ(filled[0].status, 3);
+    ASSERT_EQ(filled[0].status, 2);
     ASSERT_EQ(filled[0].reason, "");
 
     ASSERT_EQ(filled[1].order_id, "ord1");
@@ -291,7 +291,7 @@ TEST(OrderBookTest, TestHighBuyLowSell) {
     ASSERT_EQ(filled[1].side, 1);
     ASSERT_EQ(filled[1].quantity, 100);
     ASSERT_EQ(filled[1].price, 55.0);
-    ASSERT_EQ(filled[1].status, 3);
+    ASSERT_EQ(filled[1].status, 2);
     ASSERT_EQ(filled[1].reason, "");
 }
 
@@ -351,7 +351,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa15",
                     "Rose",
                     2,
-                    4,
+                    3,
                     100,
                     65.0
             },
@@ -360,7 +360,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa14",
                     "Rose",
                     1,
-                    3,
+                    2,
                     100,
                     65.0
             },
@@ -369,7 +369,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa15",
                     "Rose",
                     2,
-                    4,
+                    3,
                     100,
                     55.0
             },
@@ -378,7 +378,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa13",
                     "Rose",
                     1,
-                    3,
+                    2,
                     100,
                     55.0
             },
@@ -387,7 +387,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa16",
                     "Rose",
                     1,
-                    3,
+                    2,
                     100,
                     1.0
             },
@@ -396,7 +396,7 @@ TEST(OrderBookTest, CompleteExample){
                     "aa15",
                     "Rose",
                     2,
-                    3,
+                    2,
                     100,
                     1.0
             }

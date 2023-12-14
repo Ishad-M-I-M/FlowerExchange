@@ -58,7 +58,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              e.client_order_id,
                                              this->name,
                                              side,
-                                             3, // refers to FILL
+                                             2, // refers to FILL
                                              e.quantity,
                                              sell_orders[i].price,
                                              ""
@@ -66,8 +66,8 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
 
                 // execution entry for matching order book entry
                 int status;
-                if (sell_orders[i].quantity == e.quantity) status = 3;
-                else status = 4;
+                if (sell_orders[i].quantity == e.quantity) status = 2;
+                else status = 3;
 
                 executions.push_back({
                                              sell_orders[i].order_id,
@@ -89,7 +89,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              e.client_order_id,
                                              this->name,
                                              side,
-                                             4, // refers to PFILL
+                                             3, // refers to PFILL
                                              sell_orders[i].quantity,
                                              sell_orders[i].price,
                                              ""
@@ -102,7 +102,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              sell_orders[i].client_order_id,
                                              this->name,
                                              2,
-                                             4,
+                                             3,
                                              sell_orders[i].quantity,
                                              sell_orders[i].price,
                                              ""
@@ -123,7 +123,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              e.client_order_id,
                                              this->name,
                                              side,
-                                             3, // refers to FILL
+                                             2, // refers to FILL
                                              e.quantity,
                                              buy_orders[i].price,
                                              ""
@@ -131,8 +131,8 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
 
                 // execution entry for matching order book entry
                 int status;
-                if (buy_orders[i].quantity == e.quantity) status = 3;
-                else status = 4;
+                if (buy_orders[i].quantity == e.quantity) status = 2;
+                else status = 3;
 
                 executions.push_back({
                                              buy_orders[i].order_id,
@@ -155,7 +155,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              e.client_order_id,
                                              this->name,
                                              side,
-                                             4, // refers to PFILL
+                                             3, // refers to PFILL
                                              buy_orders[i].quantity,
                                              buy_orders[i].price,
                                              ""
@@ -168,7 +168,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              buy_orders[i].client_order_id,
                                              this->name,
                                              1,
-                                             4,
+                                             3,
                                              buy_orders[i].quantity,
                                              buy_orders[i].price,
                                              ""

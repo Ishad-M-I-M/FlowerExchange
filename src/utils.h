@@ -30,6 +30,9 @@ public:
 
     static vector<order> readOrderFile(string path);
     static void writeExecutionReport(vector<execution> executions, string path);
+
+private:
+    static string get_status(int status);
 };
 
 
