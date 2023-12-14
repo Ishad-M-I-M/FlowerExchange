@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "../src/utils.h"
+#include "../src/order_book.h"
 
 using namespace std;
 
@@ -47,6 +48,29 @@ TEST(UtilsTest, TestWriteExcutionReport) {
     expected.close();
 
     ASSERT_EQ(actualContent, expectedContent);
+}
+TEST(OrderBookTest, TestConstructor) {
+    order_book* orderBook = new order_book("Rose");
+    ASSERT_EQ(orderBook->get_name(), "Rose");
+}
+
+TEST(OrderBookTest, TestInsert) {
+    order_book* orderBook = new order_book("Rose");
+    utils::execution insertExecution = orderBook->insert(1, {
+        "aa13",
+        "Rose",
+        2,
+        100,
+        55.0
+    });
+
+    ASSERT_EQ(insertExecution.order_id, "ord1");
+    ASSERT_EQ(insertExecution.client_order_id, "aa13");
+    ASSERT_EQ(insertExecution.side, 2);
+    ASSERT_EQ(insertExecution.quantity, 100);
+    ASSERT_EQ(insertExecution.price, 55.0);
+    ASSERT_EQ(insertExecution.status, 0);
+    ASSERT_EQ(insertExecution.reason, "");
 }
 
 int main(int argc, char **argv) {
