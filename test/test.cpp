@@ -4,6 +4,7 @@
 
 #include "../src/utils.h"
 #include "../src/order_book.h"
+#include "../src/exchange_application.h"
 
 using namespace std;
 
@@ -425,6 +426,93 @@ TEST(OrderBookTest, CompleteExample){
         ASSERT_EQ(executions[j].reason, expected[j].reason);
     }
 
+}
+
+TEST(ExchangeApp, TestValidate) {
+    vector<utils::order> orders = {
+            {
+                    "aa13",
+                    "",
+                    1,
+                    100,
+                    55.0
+            },
+            {
+                    "aa14",
+                    "Rose",
+                    3,
+                    100,
+                    65.0
+            },
+            {
+                    "aa15",
+                    "Rose",
+                    2,
+                    301,
+                    1.0
+            },
+            {
+                    "aa16",
+                    "Rose",
+                    1,
+                    100,
+                    -2.0
+            }
+    };
+
+    vector<utils::execution> expected = {
+            {
+                    "ord1",
+                    "aa13",
+                    "",
+                    1,
+                    1,
+                    100,
+                    55.0,
+                    "Invalid instrument"
+            },
+            {
+                    "ord2",
+                    "aa14",
+                    "Rose",
+                    3,
+                    1,
+                    100,
+                    65.0,
+                    "Invalid side"
+            },
+            {
+                    "ord3",
+                    "aa15",
+                    "Rose",
+                    2,
+                    1,
+                    301,
+                    1.0,
+                    "Invalid quantity"
+            },
+            {
+                    "ord4",
+                    "aa16",
+                    "Rose",
+                    1,
+                    1,
+                    100,
+                    -2.0,
+                    "Invalid price"
+            }
+    };
+
+    for (int i=0; i < orders.size(); i++){
+        utils::execution result = exchange_application::validate_order(i+1, orders[i]);
+        ASSERT_EQ(expected[i].order_id, result.order_id);
+        ASSERT_EQ(expected[i].client_order_id, result.client_order_id);
+        ASSERT_EQ(expected[i].side, result.side);
+        ASSERT_EQ(expected[i].status, result.status);
+        ASSERT_EQ(expected[i].quantity, result.quantity);
+        ASSERT_EQ(expected[i].price, result.price);
+        ASSERT_EQ(expected[i].reason, result.reason);
+    }
 }
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
