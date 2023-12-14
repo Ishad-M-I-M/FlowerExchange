@@ -13,18 +13,27 @@ public:
     order_book(string name);
 
     string get_name();
-    utils::execution insert(int order_id, utils::order order);
+    vector<utils::execution> insert(int order_id, utils::order order);
+
 private:
     struct entry {
         string order_id;
+        string client_order_id;
         int quantity;
         double price;
     };
     string name;
 
-    vector<utils::execution> remaining;
-    vector<entry> left;
-    vector<entry> right;
+    vector<entry> buy_orders;
+    vector<entry> sell_orders;
+
+    void insert_buy_order(entry e);
+    void insert_sell_order(entry e);
+
+    static bool compare_buy_orders(const entry a, const entry b);
+    static bool compare_sell_orders(const entry a, const entry b);
+
+    vector<utils::execution> execute(entry e, int side);
 };
 
 
