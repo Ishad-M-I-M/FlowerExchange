@@ -49,9 +49,11 @@ void utils::writeExecutionReport(vector<execution> executions, string path) {
         cerr << "Cannot open file: " << path << endl;
         exit(1);
     }
+    int row = 0;
 
     file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << endl;
     for (execution exec: executions){
+        row++;
         file << exec.order_id << ","
             << exec.client_order_id << ","
             << exec.instrument << ","
@@ -59,7 +61,10 @@ void utils::writeExecutionReport(vector<execution> executions, string path) {
             << get_status(exec.status) << ","
             << exec.quantity << ","
             << fixed << setprecision(2) << exec.price << ","
-            << exec.reason << endl;
+            << exec.reason;
+        if (row != executions.size()){
+            file << endl;
+        }
     }
 
     file.close();

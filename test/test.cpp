@@ -695,6 +695,33 @@ TEST(ExchangeApp, TestExecutions){
     }
 }
 
+TEST(ExchangeApp, TestWithFiles) {
+    for(int i=1; i < 7; i++){
+        vector<utils::order> orders = utils::readOrderFile(TEST_RESOURCE_DIR"/orders_" + to_string(i) + ".csv");
+        exchange_application exchange = exchange_application(orders);
+        vector<utils::execution> executions = exchange.get_executions();
+        utils::writeExecutionReport(executions, TEST_RESOURCE_DIR"/temp/execution_rep_" + to_string(i) + ".csv");
+
+        ifstream actual(TEST_RESOURCE_DIR"/temp/execution_rep_" + to_string(i) + ".csv");
+        ifstream expected(TEST_RESOURCE_DIR"/execution_rep_" + to_string(i) + ".csv");
+
+        ASSERT_TRUE(actual.is_open());
+
+        stringstream buffer1;
+        buffer1 << actual.rdbuf();
+        string actualContent = buffer1.str();
+
+        stringstream buffer2;
+        buffer2 << expected.rdbuf();
+        string expectedContent = buffer2.str();
+
+        actual.close();
+        expected.close();
+
+        ASSERT_EQ(actualContent, expectedContent) << "Failed Case: " + to_string(i);
+    }
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
