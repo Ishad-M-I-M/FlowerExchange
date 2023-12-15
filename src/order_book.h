@@ -10,6 +10,8 @@
 using namespace std;
 class order_book {
 public:
+    order_book();
+
     order_book(string name);
 
     string get_name();

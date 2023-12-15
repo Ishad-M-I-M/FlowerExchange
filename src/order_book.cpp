@@ -6,6 +6,9 @@
 
 using namespace std;
 
+
+order_book::order_book() = default;
+
 order_book::order_book(string name) {
     this->name = std::move(name);
 }
@@ -102,7 +105,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              sell_orders[i].client_order_id,
                                              this->name,
                                              2,
-                                             3,
+                                             2,
                                              sell_orders[i].quantity,
                                              sell_orders[i].price,
                                              ""
@@ -168,7 +171,7 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
                                              buy_orders[i].client_order_id,
                                              this->name,
                                              1,
-                                             3,
+                                             2,
                                              buy_orders[i].quantity,
                                              buy_orders[i].price,
                                              ""
@@ -194,7 +197,3 @@ vector<utils::execution> order_book::execute(order_book::entry e, int side) {
     }
     return executions;
 }
-
-
-
-

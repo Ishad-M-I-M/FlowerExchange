@@ -514,6 +514,187 @@ TEST(ExchangeApp, TestValidate) {
         ASSERT_EQ(expected[i].reason, result.reason);
     }
 }
+
+TEST(ExchangeApp, TestExecutions){
+    vector<utils::order> orders = {
+            {
+                    "aa13",
+                    "Rose",
+                    1,
+                    100,
+                    55.0
+            },
+            {
+                    "aa14",
+                    "Rose",
+                    1,
+                    100,
+                    65.0
+            },
+            {
+                "aa15",
+                "",
+                1,
+                100,
+                55.0
+            },
+            {
+                    "aa16",
+                    "Lavender",
+                    1,
+                    100,
+                    55.0
+            },
+            {
+                    "aa17",
+                    "Lavender",
+                    2,
+                    150,
+                    45.0
+            },
+            {
+                    "aa18",
+                    "Rose",
+                    2,
+                    300,
+                    1.0
+            },
+            {
+                    "aa19",
+                    "Rose",
+                    1,
+                    100,
+                    2.0
+            }
+    };
+
+    vector<utils::execution> expected = {
+            {
+                    "ord1",
+                    "aa13",
+                    "Rose",
+                    1,
+                    0,
+                    100,
+                    55.0
+            },
+            {
+                    "ord2",
+                    "aa14",
+                    "Rose",
+                    1,
+                    0,
+                    100,
+                    65.0
+            },
+            {
+                    "ord3",
+                    "aa15",
+                    "",
+                    1,
+                    1,
+                    100,
+                    55.0,
+                    "Invalid instrument"
+            },
+            {
+                    "ord4",
+                    "aa16",
+                    "Lavender",
+                    1,
+                    0,
+                    100,
+                    55.0
+            },
+            {
+                     "ord5",
+                     "aa17",
+                     "Lavender",
+                     2,
+                     3,
+                     100,
+                     55.0
+             },
+            {
+                    "ord4",
+                    "aa16",
+                    "Lavender",
+                    1,
+                    2,
+                    100,
+                    55.0
+            },
+            {
+                    "ord6",
+                    "aa18",
+                    "Rose",
+                    2,
+                    3,
+                    100,
+                    65.0
+            },
+            {
+                    "ord2",
+                    "aa14",
+                    "Rose",
+                    1,
+                    2,
+                    100,
+                    65.0
+            },
+            {
+                    "ord6",
+                    "aa18",
+                    "Rose",
+                    2,
+                    3,
+                    100,
+                    55.0
+            },
+            {
+                    "ord1",
+                    "aa13",
+                    "Rose",
+                    1,
+                    2,
+                    100,
+                    55.0
+            },
+            {
+                    "ord7",
+                    "aa19",
+                    "Rose",
+                    1,
+                    2,
+                    100,
+                    1.0
+            },
+            {
+                    "ord6",
+                    "aa18",
+                    "Rose",
+                    2,
+                    2,
+                    100,
+                    1.0
+            }
+    };
+    exchange_application app = exchange_application(orders);
+    vector<utils::execution> actual = app.get_executions();
+
+    ASSERT_EQ(actual.size(), expected.size());
+    for (int i=0; i < actual.size(); i++){
+        ASSERT_EQ(actual[i].order_id, expected[i].order_id);
+        ASSERT_EQ(actual[i].client_order_id, expected[i].client_order_id);
+        ASSERT_EQ(actual[i].side, expected[i].side);
+        ASSERT_EQ(actual[i].status, expected[i].status);
+        ASSERT_EQ(actual[i].instrument, expected[i].instrument);
+        ASSERT_EQ(actual[i].quantity, expected[i].quantity);
+        ASSERT_EQ(actual[i].price, expected[i].price);
+        ASSERT_EQ(actual[i].reason, expected[i].reason);
+    }
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

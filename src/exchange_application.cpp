@@ -2,7 +2,20 @@
 #include "exchange_application.h"
 unordered_set<string> exchange_application::flowers = {"Rose", "Lavender", "Lotus", "Tulip", "Orchid"};
 exchange_application::exchange_application(vector<utils::order> orders) {
-    this->orders = orders;
+    for (string flower: flowers){
+        order_book_map[flower] = order_book(flower);
+    }
+
+    int order_num = 1;
+    for (utils::order order : orders){
+        utils::execution validation = validate_order(order_num, order);
+        if (validation.reason.empty()){
+            insert_executions(order_book_map[order.instrument].insert(order_num,order));
+        } else {
+            this->executions.push_back(validation);
+        }
+        order_num++;
+    }
 }
 
 utils::execution exchange_application::validate_order(int order_id, utils::order order) {
@@ -23,4 +36,14 @@ utils::execution exchange_application::validate_order(int order_id, utils::order
         order.price,
         reason
     };
+}
+
+void exchange_application::insert_executions(vector<utils::execution> executions) {
+    for (utils::execution execution: executions){
+        this->executions.push_back(execution);
+    }
+}
+
+vector<utils::execution> exchange_application::get_executions() {
+    return this->executions;
 }
