@@ -20,3 +20,9 @@ jobs:
 
       - name: Unit tests
         run: ctest -C Debug -V
+
+      - name: Test Executable
+        run: |
+          ./FlowerExchangeApp ./test/resources/orders_6.csv
+          cat ./execution-report.csv
+          diff ./test/resources/execution_rep_6.csv ./execution-report.csv
