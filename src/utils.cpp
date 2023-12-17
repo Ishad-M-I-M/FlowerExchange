@@ -7,12 +7,12 @@
 #include <sstream>
 #include <iomanip>
 
-using namespace std;
-vector<utils::order> utils::readOrderFile(string path) {
-    ifstream file(path);
+
+vector<utils::order> utils::readOrderFile(const string& path) {
+    std::ifstream file(path);
     if (!file.is_open()){
-        cerr << "Cannot open file: " << path << endl;
-        exit(1);
+        std::cerr << "Cannot open file: " << path << std::endl;
+        throw std::runtime_error("File open failed");
     }
 
     vector<order> orders;
@@ -20,22 +20,26 @@ vector<utils::order> utils::readOrderFile(string path) {
     string line;
     getline(file, line);
     while (getline(file, line)) {
-        istringstream ss(line);
+        std::istringstream ss(line);
         string token;
 
-        order currentOrder;
+        string client_order_id;
+        string instrument;
+        int side;
+        int quantity;
+        double price;
 
-        getline(ss, currentOrder.client_order_id, ',');
-        getline(ss, currentOrder.instrument, ',');
+        getline(ss, client_order_id, ',');
+        getline(ss, instrument, ',');
 
         getline(ss, token, ',');
-        currentOrder.side = stoi(token);
+        side = stoi(token);
 
         getline(ss, token, ',');
-        currentOrder.quantity = stoi(token);
+        quantity = stoi(token);
 
-        ss >> currentOrder.price;
-        orders.push_back(currentOrder);
+        ss >> price;
+        orders.emplace_back(client_order_id, instrument, side, quantity, price);
     }
 
     file.close();
@@ -43,16 +47,16 @@ vector<utils::order> utils::readOrderFile(string path) {
     return orders;
 }
 
-void utils::writeExecutionReport(vector<execution> executions, string path) {
-    ofstream file(path);
+void utils::writeExecutionReport(const vector<execution>& executions, const string& path) {
+    std::ofstream file(path);
     if (!file.is_open()){
-        cerr << "Cannot open file: " << path << endl;
-        exit(1);
+        std::cerr << "Cannot open file: " << path << std::endl;
+        throw std::runtime_error("File open failed");
     }
     int row = 0;
 
-    file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << endl;
-    for (execution exec: executions){
+    file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << std::endl;
+    for (const execution exec: executions){
         row++;
         file << exec.order_id << ","
             << exec.client_order_id << ","
@@ -60,10 +64,10 @@ void utils::writeExecutionReport(vector<execution> executions, string path) {
             << exec.side << ","
             << get_status(exec.status) << ","
             << exec.quantity << ","
-            << fixed << setprecision(2) << exec.price << ","
+            << std::fixed << std::setprecision(2) << exec.price << ","
             << exec.reason;
         if (row != executions.size()){
-            file << endl;
+            file << std::endl;
         }
     }
 

@@ -27,7 +27,7 @@ TEST(UtilsTest, TestReadOrderFile){
 
 TEST(UtilsTest, TestWriteExcutionReport) {
     vector<utils::execution> executions_1 = {
-            {"ord1", "aa13", "Rose", 2, 0, 100, 55.00}
+            utils::execution("ord1", "aa13", "Rose", 2, 0, 100, 55.00, "")
     };
 
     utils::writeExecutionReport(executions_1, TEST_RESOURCE_DIR"/temp/execution_rep_1.csv");
@@ -75,7 +75,7 @@ TEST(OrderBookTest, TestSimpleInsert) {
     ASSERT_EQ(insertExecutions[0].reason, "");
 }
 TEST(OrderBookTest, TestSimpleSellBuy) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
         "aa13",
         "Rose",
@@ -112,7 +112,7 @@ TEST(OrderBookTest, TestSimpleSellBuy) {
 }
 
 TEST(OrderBookTest, TestSimpleSellBuyPFill) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
             "aa13",
             "Rose",
@@ -149,7 +149,7 @@ TEST(OrderBookTest, TestSimpleSellBuyPFill) {
 }
 
 TEST(OrderBookTest, TestSimpleBuySell) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
             "aa13",
             "Rose",
@@ -186,7 +186,7 @@ TEST(OrderBookTest, TestSimpleBuySell) {
 }
 
 TEST(OrderBookTest, TestSimpleBuySellPFill) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
             "aa13",
             "Rose",
@@ -223,7 +223,7 @@ TEST(OrderBookTest, TestSimpleBuySellPFill) {
 }
 
 TEST(OrderBookTest, TestLowSellHighBuy) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
             "aa13",
             "Rose",
@@ -260,7 +260,7 @@ TEST(OrderBookTest, TestLowSellHighBuy) {
 }
 
 TEST(OrderBookTest, TestHighBuyLowSell) {
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> insertExecutions = orderBook->insert(1, {
             "aa13",
             "Rose",
@@ -336,7 +336,8 @@ TEST(OrderBookTest, CompleteExample){
                 1,
                 0,
                 100,
-                55.0
+                55.0,
+                ""
             },
             {
                     "ord2",
@@ -345,7 +346,8 @@ TEST(OrderBookTest, CompleteExample){
                     1,
                     0,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord3",
@@ -354,7 +356,8 @@ TEST(OrderBookTest, CompleteExample){
                     2,
                     3,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord2",
@@ -363,7 +366,8 @@ TEST(OrderBookTest, CompleteExample){
                     1,
                     2,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord3",
@@ -372,7 +376,8 @@ TEST(OrderBookTest, CompleteExample){
                     2,
                     3,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord1",
@@ -381,7 +386,8 @@ TEST(OrderBookTest, CompleteExample){
                     1,
                     2,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord4",
@@ -390,7 +396,8 @@ TEST(OrderBookTest, CompleteExample){
                     1,
                     2,
                     100,
-                    1.0
+                    1.0,
+                    ""
             },
             {
                     "ord3",
@@ -399,18 +406,19 @@ TEST(OrderBookTest, CompleteExample){
                     2,
                     2,
                     100,
-                    1.0
+                    1.0,
+                    ""
             }
 
 
     };
 
-    order_book* orderBook = new order_book("Rose");
+    auto* orderBook = new order_book("Rose");
     vector<utils::execution> executions;
     int i = 1;
-    for (utils::order order: orders){
+    for (const utils::order& order: orders){
         vector<utils::execution> fills = orderBook->insert( i++, order);
-        for(utils::execution exec: fills){
+        for(const utils::execution& exec: fills){
             executions.push_back(exec);
         }
     }
@@ -576,7 +584,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     0,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord2",
@@ -585,7 +594,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     0,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord3",
@@ -604,7 +614,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     0,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                      "ord5",
@@ -613,7 +624,8 @@ TEST(ExchangeApp, TestExecutions){
                      2,
                      3,
                      100,
-                     55.0
+                     55.0,
+                     ""
              },
             {
                     "ord4",
@@ -622,7 +634,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     2,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord6",
@@ -631,7 +644,8 @@ TEST(ExchangeApp, TestExecutions){
                     2,
                     3,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord2",
@@ -640,7 +654,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     2,
                     100,
-                    65.0
+                    65.0,
+                    ""
             },
             {
                     "ord6",
@@ -649,7 +664,8 @@ TEST(ExchangeApp, TestExecutions){
                     2,
                     3,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord1",
@@ -658,7 +674,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     2,
                     100,
-                    55.0
+                    55.0,
+                    ""
             },
             {
                     "ord7",
@@ -667,7 +684,8 @@ TEST(ExchangeApp, TestExecutions){
                     1,
                     2,
                     100,
-                    1.0
+                    1.0,
+                    ""
             },
             {
                     "ord6",
@@ -676,7 +694,8 @@ TEST(ExchangeApp, TestExecutions){
                     2,
                     2,
                     100,
-                    1.0
+                    1.0,
+                    ""
             }
     };
     exchange_application app = exchange_application(orders);
