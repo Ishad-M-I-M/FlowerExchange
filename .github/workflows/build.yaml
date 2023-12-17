@@ -15,11 +15,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build
         run: |
-          cmake .
+          cmake -DCMAKE_BUILD_TYPE=DEBUG .
           make
+          make coverage
 
-      - name: Unit tests
-        run: ctest -C Debug -V
+      - name: Generate CodeCov Report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Test Executable
         run: |
