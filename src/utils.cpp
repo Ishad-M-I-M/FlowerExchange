@@ -23,19 +23,23 @@ vector<utils::order> utils::readOrderFile(const string& path) {
         std::istringstream ss(line);
         string token;
 
-        order currentOrder;
+        string client_order_id;
+        string instrument;
+        int side;
+        int quantity;
+        double price;
 
-        getline(ss, currentOrder.client_order_id, ',');
-        getline(ss, currentOrder.instrument, ',');
+        getline(ss, client_order_id, ',');
+        getline(ss, instrument, ',');
 
         getline(ss, token, ',');
-        currentOrder.side = stoi(token);
+        side = stoi(token);
 
         getline(ss, token, ',');
-        currentOrder.quantity = stoi(token);
+        quantity = stoi(token);
 
-        ss >> currentOrder.price;
-        orders.push_back(currentOrder);
+        ss >> price;
+        orders.emplace_back(client_order_id, instrument, side, quantity, price);
     }
 
     file.close();
@@ -52,7 +56,7 @@ void utils::writeExecutionReport(const vector<execution>& executions, const stri
     int row = 0;
 
     file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << std::endl;
-    for (const execution& exec: executions){
+    for (const execution exec: executions){
         row++;
         file << exec.order_id << ","
             << exec.client_order_id << ","
