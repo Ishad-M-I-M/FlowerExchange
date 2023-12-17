@@ -14,10 +14,10 @@ class order_book {
 public:
     order_book();
 
-    order_book(string name);
+    explicit order_book(string name);
 
     string get_name();
-    vector<utils::execution> insert(int order_id, utils::order order);
+    vector<utils::execution> insert(int order_id, const utils::order& order);
 
 private:
     struct entry {
@@ -31,11 +31,11 @@ private:
     vector<entry> buy_orders;
     vector<entry> sell_orders;
 
-    void insert_buy_order(entry e);
-    void insert_sell_order(entry e);
+    void insert_buy_order(const entry& e);
+    void insert_sell_order(const entry& e);
 
-    static bool compare_buy_orders(const entry a, const entry b);
-    static bool compare_sell_orders(const entry a, const entry b);
+    static bool compare_buy_orders(const entry& a, const entry& b);
+    static bool compare_sell_orders(const entry& a, const entry& b);
 
     vector<utils::execution> execute(entry e, int side);
 };

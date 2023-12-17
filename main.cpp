@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
     vector<utils::order> orders = utils::readOrderFile(argv[1]);
-    exchange_application exchange = exchange_application(orders);
+    auto exchange = exchange_application(orders);
     vector<utils::execution> executions = exchange.get_executions();
     utils::writeExecutionReport(executions, std::filesystem::current_path().string() + "/execution-report.csv");
 }

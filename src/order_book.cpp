@@ -15,7 +15,7 @@ string order_book::get_name() {
     return this->name;
 }
 
-vector<utils::execution> order_book::insert(int order_id, utils::order order) {
+vector<utils::execution> order_book::insert(int order_id, const utils::order& order) {
     entry e = {
             "ord" + std::to_string(order_id),
             order.client_order_id,
@@ -26,21 +26,21 @@ vector<utils::execution> order_book::insert(int order_id, utils::order order) {
     return execute(e, order.side);
 }
 
-void order_book::insert_buy_order(entry e) {
+void order_book::insert_buy_order(const entry& e) {
     auto index = upper_bound(buy_orders.begin(), buy_orders.end(), e, compare_buy_orders);
     buy_orders.insert(index, e);
 }
 
-void order_book::insert_sell_order(entry e) {
+void order_book::insert_sell_order(const entry& e) {
     auto index = upper_bound(sell_orders.begin(), sell_orders.end(), e, compare_sell_orders);
     sell_orders.insert(index, e);
 }
 
-bool order_book::compare_buy_orders(const entry a, const entry b) {
+bool order_book::compare_buy_orders(const entry& a, const entry& b) {
     return a.price > b.price;
 }
 
-bool order_book::compare_sell_orders(const entry a, const entry b) {
+bool order_book::compare_sell_orders(const entry& a, const entry& b) {
     return a.price < b.price;
 }
 

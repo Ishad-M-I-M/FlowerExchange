@@ -29,8 +29,8 @@ public:
         string reason;
     };
 
-    static vector<order> readOrderFile(string path);
-    static void writeExecutionReport(vector<execution> executions, string path);
+    static vector<order> readOrderFile(const string& path);
+    static void writeExecutionReport(const vector<execution>& executions, const string& path);
 
 private:
     static string get_status(int status);

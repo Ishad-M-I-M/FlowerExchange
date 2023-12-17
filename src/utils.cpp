@@ -8,7 +8,7 @@
 #include <iomanip>
 
 
-vector<utils::order> utils::readOrderFile(string path) {
+vector<utils::order> utils::readOrderFile(const string& path) {
     std::ifstream file(path);
     if (!file.is_open()){
         std::cerr << "Cannot open file: " << path << std::endl;
@@ -43,7 +43,7 @@ vector<utils::order> utils::readOrderFile(string path) {
     return orders;
 }
 
-void utils::writeExecutionReport(vector<execution> executions, string path) {
+void utils::writeExecutionReport(const vector<execution>& executions, const string& path) {
     std::ofstream file(path);
     if (!file.is_open()){
         std::cerr << "Cannot open file: " << path << std::endl;
@@ -52,7 +52,7 @@ void utils::writeExecutionReport(vector<execution> executions, string path) {
     int row = 0;
 
     file << "Order ID,Client Order ID,Instrument,Side,Exec Status,Quantity,Price,Reason" << std::endl;
-    for (execution exec: executions){
+    for (const execution& exec: executions){
         row++;
         file << exec.order_id << ","
             << exec.client_order_id << ","
