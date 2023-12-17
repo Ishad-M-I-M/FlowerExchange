@@ -7,7 +7,9 @@
 
 #include "utils.h"
 
-using namespace std;
+using std::string;
+using std::vector;
+
 class order_book {
 public:
     order_book();

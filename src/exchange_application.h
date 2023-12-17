@@ -8,7 +8,11 @@
 #include <unordered_set>
 #include <unordered_map>
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::unordered_set;
+using std::unordered_map;
+
 class exchange_application {
 public:
     static unordered_set<string> flowers;

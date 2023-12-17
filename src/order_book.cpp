@@ -4,8 +4,6 @@
 #include <utility>
 #include <algorithm>
 
-using namespace std;
-
 
 order_book::order_book() = default;
 
@@ -19,7 +17,7 @@ string order_book::get_name() {
 
 vector<utils::execution> order_book::insert(int order_id, utils::order order) {
     entry e = {
-            "ord" + to_string(order_id),
+            "ord" + std::to_string(order_id),
             order.client_order_id,
             order.quantity,
             order.price

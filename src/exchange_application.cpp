@@ -27,7 +27,7 @@ utils::execution exchange_application::validate_order(int order_id, utils::order
     else if (order.quantity % 10 != 0 || order.quantity < 10 || order.quantity > 1000) reason = "Invalid quantity";
     else reason = "";
     return {
-        "ord"+ to_string(order_id),
+        "ord"+ std::to_string(order_id),
         order.client_order_id,
         order.instrument,
         order.side,
